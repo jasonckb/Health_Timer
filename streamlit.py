@@ -48,7 +48,7 @@ def run_timer():
         st.markdown(f"""
         <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
                     background-color: #ff0000; border-radius: 10px; margin: 20px 0;">
-            <span style="font-size: 80px; font-weight: bold; color: #ffffff;">
+            <span style="font-size: 60px; font-weight: bold; color: #ffffff;">
                 TIME'S UP!
             </span>
         </div>
