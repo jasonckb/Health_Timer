@@ -1,5 +1,17 @@
 import streamlit as st
 import time
+import base64
+
+def autoplay_audio(file_path: str):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    b64 = base64.b64encode(data).decode()
+    md = f"""
+    <audio autoplay="true">
+    <source src="data:audio/wav;base64,{b64}" type="audio/wav">
+    </audio>
+    """
+    st.markdown(md, unsafe_allow_html=True)
 
 def run_timer():
     placeholder = st.empty()
@@ -31,14 +43,17 @@ def run_timer():
     # Clear the timer display
     placeholder.empty()
     
-    # Play sound once
-    st.audio("alert.wav", format="audio/wav", start_time=0)
+    # Play sound once with autoplay
+    autoplay_audio("alert.wav")
+    
+    # Also add Streamlit's audio component for manual playback if needed
+    st.audio("alert.wav", format="audio/wav")
     
     # Display "TIME'S UP!" message
     st.markdown(f"""
     <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
                 background-color: #ff0000; border-radius: 10px; margin: 20px 0;">
-        <span style="font-size: 60px; font-weight: bold; color: #ffffff;">
+        <span style="font-size: 80px; font-weight: bold; color: #ffffff;">
             TIME'S UP!
         </span>
     </div>
