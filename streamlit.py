@@ -47,7 +47,7 @@ def run_timer():
     autoplay_audio("alert.wav")
     
     # Also add Streamlit's audio component for manual playback if needed
-    st.audio("alert.wav", format="audio/wav", autoplay=true)
+    st.audio("alert.wav", format="audio/wav", autoplay=false)
     
     # Display "TIME'S UP!" message
     st.markdown(f"""
