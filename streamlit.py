@@ -4,6 +4,21 @@ import time
 def posture_reminder():
     st.title("Posture Reminder App")
 
+    # JavaScript for playing beep sound
+    st.markdown("""
+    <script>
+    function beep() {
+        var audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+        audio.play();
+    }
+    </script>
+    """, unsafe_allow_html=True)
+
+    # Add a button to test the sound
+    if st.button("Test Sound"):
+        st.markdown("<script>beep();</script>", unsafe_allow_html=True)
+        st.write("If you didn't hear a sound, please check your audio settings and ensure autoplay is allowed for this site.")
+
     # Step 1: Ask user if they want to sit or stand
     position = st.radio("Choose your position:", ("Sit", "Stand"))
 
@@ -38,7 +53,8 @@ def posture_reminder():
             
             time.sleep(1)
 
-        # Step 5: Finish notification with flashing visual alert
+        # Step 5: Finish notification with flashing visual alert and sound
+        st.markdown("<script>beep();</script>", unsafe_allow_html=True)
         for _ in range(5):  # Flash 5 times
             timer_placeholder.markdown(f"""
             <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
