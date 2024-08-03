@@ -40,28 +40,19 @@ def run_timer():
         
         time.sleep(1)
     
-    for _ in range(5):  # Flash 5 times
-        autoplay_audio("alert.mov")
-        with placeholder.container():
-            st.markdown(f"""
-            <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
-                        background-color: #ff0000; border-radius: 10px; margin: 20px 0;">
-                <span style="font-size: 80px; font-weight: bold; color: #ffffff;">
-                    TIME'S UP!
-                </span>
-            </div>
-            """, unsafe_allow_html=True)
-        time.sleep(0.5)
-        with placeholder.container():
-            st.markdown(f"""
-            <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
-                        background-color: #ffffff; border-radius: 10px; margin: 20px 0;">
-                <span style="font-size: 80px; font-weight: bold; color: #ff0000;">
-                    TIME'S UP!
-                </span>
-            </div>
-            """, unsafe_allow_html=True)
-        time.sleep(0.5)
+    # Play sound once
+    autoplay_audio("alert.mov")
+    
+    # Display "TIME'S UP!" message
+    with placeholder.container():
+        st.markdown(f"""
+        <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
+                    background-color: #ff0000; border-radius: 10px; margin: 20px 0;">
+            <span style="font-size: 80px; font-weight: bold; color: #ffffff;">
+                TIME'S UP!
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.session_state.timer_complete = True
 
