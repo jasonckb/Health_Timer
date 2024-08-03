@@ -32,7 +32,7 @@ def run_timer():
             st.markdown(f"""
             <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
                         background-color: #f0f2f6; border-radius: 10px; margin: 20px 0;">
-                <span style="font-size: 80px; font-weight: bold; color: #0066cc;">
+                <span style="font-size: 60px; font-weight: bold; color: #0066cc;">
                     {time_str}
                 </span>
             </div>
@@ -43,9 +43,11 @@ def run_timer():
     # Clear the timer display
     placeholder.empty()
     
-    # Play sound once with a shorter delay
-    time.sleep(0.1)  # Reduced delay from 1 second to 0.1 seconds
+    # Play sound once with autoplay
     autoplay_audio("alert.wav")
+    
+    # Also add Streamlit's audio component for manual playback if needed
+    st.audio("alert.wav", format="audio/wav", autoplay=true)
     
     # Display "TIME'S UP!" message
     st.markdown(f"""
