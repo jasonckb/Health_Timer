@@ -7,8 +7,8 @@ def autoplay_audio(file_path: str):
         data = f.read()
     b64 = base64.b64encode(data).decode()
     md = f"""
-    <audio autoplay="true">
-    <source src="data:video/quicktime;base64,{b64}" type="video/quicktime">
+    <audio controls autoplay="true">
+    <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
     </audio>
     """
     st.markdown(md, unsafe_allow_html=True)
