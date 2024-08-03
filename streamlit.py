@@ -2,16 +2,16 @@ import streamlit as st
 import time
 import base64
 
-def get_audio_html(file_path: str):
+def autoplay_audio(file_path: str):
     with open(file_path, "rb") as f:
         data = f.read()
     b64 = base64.b64encode(data).decode()
-    return f"""
-    <audio id="alert-sound">
+    md = f"""
+    <audio controls autoplay="true">
     <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
     </audio>
-    <button onclick="document.getElementById('alert-sound').play()">Play Alert Sound</button>
     """
+    st.markdown(md, unsafe_allow_html=True)
 
 def run_timer():
     placeholder = st.empty()
@@ -40,17 +40,21 @@ def run_timer():
         
         time.sleep(1)
     
-    # Display "TIME'S UP!" message and sound button
-    with placeholder.container():
-        st.markdown(f"""
-        <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
-                    background-color: #ff0000; border-radius: 10px; margin: 20px 0;">
-            <span style="font-size: 80px; font-weight: bold; color: #ffffff;">
-                TIME'S UP!
-            </span>
-        </div>
-        """, unsafe_allow_html=True)
-        st.markdown(get_audio_html("alert.mov"), unsafe_allow_html=True)
+    # Clear the timer display
+    placeholder.empty()
+    
+    # Play sound once
+    autoplay_audio("alert.mov")
+    
+    # Display "TIME'S UP!" message
+    st.markdown(f"""
+    <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
+                background-color: #ff0000; border-radius: 10px; margin: 20px 0;">
+        <span style="font-size: 60px; font-weight: bold; color: #ffffff;">
+            TIME'S UP!
+        </span>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.session_state.timer_complete = True
 
