@@ -62,7 +62,7 @@ def run_timer():
     st.session_state.timer_complete = True
 
 def posture_reminder():
-    st.title("Posture Reminder App")
+    st.title("Posture Reminder by Jason")
 
     if 'timer_running' not in st.session_state:
         st.session_state.timer_running = False
