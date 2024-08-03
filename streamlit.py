@@ -67,13 +67,13 @@ def posture_reminder():
             st.session_state.timer_running = True
             st.session_state.duration = duration
             st.session_state.position = position
-            st.experimental_rerun()
+            st.rerun()
     else:
         run_timer(st.session_state.duration)
         st.success(f"Finished! Please change your posture from {st.session_state.position.lower()}ing!")
         if st.button("Reset"):
             st.session_state.timer_running = False
-            st.experimental_rerun()
+            st.rerun()
 
 if __name__ == "__main__":
     posture_reminder()
