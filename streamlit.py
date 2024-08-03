@@ -1,18 +1,20 @@
 import streamlit as st
 import time
+import base64
+
+def autoplay_audio(file_path: str):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    b64 = base64.b64encode(data).decode()
+    md = f"""
+    <audio controls autoplay="true" style="display:none">
+    <source src="data:video/quicktime;base64,{b64}" type="video/quicktime">
+    </audio>
+    """
+    st.markdown(md, unsafe_allow_html=True)
 
 def posture_reminder():
     st.title("Posture Reminder App")
-
-    # JavaScript for playing beep sound
-    st.markdown("""
-    <script>
-    var audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-    function playBeep() {
-        audio.play();
-    }
-    </script>
-    """, unsafe_allow_html=True)
 
     # Step 1: Ask user if they want to sit or stand
     position = st.radio("Choose your position:", ("Sit", "Stand"))
@@ -23,10 +25,7 @@ def posture_reminder():
                                min_value=1, value=default_time, step=1)
 
     # Step 3: Start button
-    if st.button("Start Timer (Click to Enable Sound)"):
-        st.markdown("<script>playBeep();</script>", unsafe_allow_html=True)
-        st.write("Timer started! Sound should now be enabled.")
-        
+    if st.button("Start Timer"):
         # Step 4: Countdown timer
         progress_bar = st.progress(0)
         timer_placeholder = st.empty()
@@ -46,7 +45,7 @@ def posture_reminder():
 
         # Step 5: Finish notification with flashing visual alert and sound
         for _ in range(5):  # Flash 5 times
-            st.markdown("<script>playBeep();</script>", unsafe_allow_html=True)
+            autoplay_audio("alert.mov")  # Using the .mov file
             timer_placeholder.markdown(f"""
             <div style="display: flex; justify-content: center; align-items: center; height: 150px; 
                         background-color: #ff0000; border-radius: 10px; margin: 20px 0;">
