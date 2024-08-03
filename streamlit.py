@@ -2,16 +2,21 @@ import streamlit as st
 import time
 import base64
 
-def autoplay_audio(file_path: str):
+def get_audio_html(file_path: str):
     with open(file_path, "rb") as f:
         data = f.read()
     b64 = base64.b64encode(data).decode()
-    md = f"""
-    <audio autoplay="true">
+    return f"""
+    <audio id="alert-sound" preload="auto">
     <source src="data:audio/wav;base64,{b64}" type="audio/wav">
     </audio>
+    <script>
+    const audio = document.getElementById('alert-sound');
+    window.playAlertSound = () => {{
+        audio.play().catch(e => console.error('Audio playback failed:', e));
+    }};
+    </script>
     """
-    st.markdown(md, unsafe_allow_html=True)
 
 def run_timer():
     placeholder = st.empty()
@@ -43,11 +48,8 @@ def run_timer():
     # Clear the timer display
     placeholder.empty()
     
-    # Play sound once with autoplay
-    autoplay_audio("alert.wav")
-    
-    # Also add Streamlit's audio component for manual playback if needed
-    st.audio("alert.wav", format="audio/wav")
+    # Attempt to play sound
+    st.markdown('<script>playAlertSound();</script>', unsafe_allow_html=True)
     
     # Display "TIME'S UP!" message
     st.markdown(f"""
@@ -59,10 +61,17 @@ def run_timer():
     </div>
     """, unsafe_allow_html=True)
     
+    # Fallback manual play button
+    if st.button("Play Alert Sound"):
+        st.markdown('<script>playAlertSound();</script>', unsafe_allow_html=True)
+    
     st.session_state.timer_complete = True
 
 def posture_reminder():
     st.title("Posture Reminder App")
+
+    # Preload audio
+    st.markdown(get_audio_html("alert.wav"), unsafe_allow_html=True)
 
     if 'timer_running' not in st.session_state:
         st.session_state.timer_running = False
@@ -80,6 +89,8 @@ def posture_reminder():
         st.session_state.duration = duration
         st.session_state.position = position
         st.session_state.timer_complete = False
+        # Attempt to play a silent sound to enable audio
+        st.markdown('<script>playAlertSound();</script>', unsafe_allow_html=True)
 
     if st.session_state.timer_running and not st.session_state.timer_complete:
         run_timer()
